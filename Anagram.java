@@ -1,6 +1,7 @@
-package Automation;
+package Automation.test;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class Anagram {
 
@@ -44,10 +45,30 @@ public class Anagram {
 		return xor==0?true:false;
 	}
 	
-	
+	private static boolean anagram_usingHashMap(String a, String b) {
+		HashMap<Character,Integer> map = new HashMap<Character, Integer>();
+		for(int i=0;i<a.length();i++) {
+			int count = 1;
+			if(map.containsKey(a.charAt(i))) 
+				count = map.get(a.charAt(i))+1;
+			map.put(a.charAt(i), count);
+		}
+		System.out.println(map);
+		for(int j=0;j<b.length();j++) {
+			if(map.containsKey(b.charAt(j))) {
+				int count_b = map.get(b.charAt(j));
+				if (count_b==1)
+					map.remove(b.charAt(j), 1);
+				else
+					map.put(b.charAt(j), count_b-1);
+			}
+		}
+		System.out.println(map);
+		return (map.isEmpty())?true:false;
+	}
 	
 	public static void main(String[] args) {
-		System.out.println(anagram_usingXOR("abcba","cbaab"));
+		System.out.println(anagram_usingHashMap("abcba","cbcab"));
 	}
 
 }
